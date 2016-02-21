@@ -7,7 +7,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 /**
  * Created by Ulli Gerhard on 21.02.2016.
  */
-public class Config {
+class ConfigAccess {
     private static final String DEFAULT_PROPERTIES = "default.properties";
     private static final String CONFIG_PROPERTIES = "config.properties";
     private static Configuration cfg;
@@ -18,7 +18,7 @@ public class Config {
             temp.copy(new PropertiesConfiguration(CONFIG_PROPERTIES));
             cfg = temp;
         } catch (ConfigurationException e) {
-            org.slf4j.LoggerFactory.getLogger(Config.class).error("Unable to read configuration {}", e.getMessage());
+            org.slf4j.LoggerFactory.getLogger("configuration.ConfigAccess").error("Unable to read configuration {}", e.getMessage());
         }
     }
 

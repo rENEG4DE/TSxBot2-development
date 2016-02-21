@@ -1,6 +1,5 @@
 package system.run;
 
-import common.utility.Config;
 import system.core.Core;
 
 /**
@@ -8,7 +7,6 @@ import system.core.Core;
  */
 public class Main {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger("system.Main");
-    private static final org.apache.commons.configuration.Configuration cfg = Config.get();
     private final Core core;
 
     public static void main(String[] args) {
