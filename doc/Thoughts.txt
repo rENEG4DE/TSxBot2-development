@@ -1,0 +1,33 @@
+Utilize Frameworks
+Design before Development
+Functionality by Plugins
+Plug&Play Plugins
+package by feature
+do not repeat mistakes (doh!)
+json or yaml config
+file-system persistence (no need for db - write good interface)
+adhere SOLID
+no more NULL ! (use option)
+
+apache config
+slf4j logging (maybe wrapper?)
+akka
+guice
+json/yaml
+RabbitMQ (needed?)
+
+Different Devices,
+Every device has a facade
+Global abstract base-class for facades (maybe?)
+Avoid new - use factories
+Lua for Plugins - no more compilation necessary
+
+
+notdienst
+
+wiener platz 
+genoveva straﬂe 
+
+0221 612002
+
+neufelder straﬂe 32
