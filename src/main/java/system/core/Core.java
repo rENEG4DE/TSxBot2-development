@@ -27,4 +27,8 @@ public class Core {
         log.info("Starting core");
         log.info("Core has been started");
     }
+
+    public void addShutdownHook (Runnable runnable) {
+        Runtime.getRuntime().addShutdownHook(new Thread(runnable));
+    }
 }
