@@ -21,7 +21,7 @@ Every device has a facade
 Global abstract base-class for facades (maybe?)
 Avoid new - use factories
 Lua for Plugins - no more compilation necessary
-
+Identify artifacts / devices like this-is-the-artifact (all small letters, separate words by dash)
 
 notdienst
 

@@ -1,26 +1,26 @@
 package system.run;
 
+import common.Super.SystemDesignator;
+import common.Super.TSX;
 import system.core.Core;
 
 /**
  * Created by Ulli Gerhard on 21.02.2016.
  */
-public class Main {
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger("system.Main");
+public class Main extends TSX {
     private final Core core;
 
     public static void main(String[] args) {
-        log.info ("Starting TSxBot2");
-
-        new Main ();
-
-        Core.get().addShutdownHook(() -> {
-            log.info ("TSxBot2 has been terminated");
-        });
+        new Main();
     }
 
-    private Main () {
+    private Main() {
+        super(SystemDesignator.SYSTEM, Main.class);
+        log.info("Starting {}", cfg.SYSTEM_SERVERLABEL);
         core = Core.get();
-        core.start ();
+        core.start();
+        Core.get().addShutdownHook(() -> {
+            log.info("{} has been terminated", cfg.SYSTEM_SERVERLABEL);
+        });
     }
 }

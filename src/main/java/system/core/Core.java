@@ -1,11 +1,12 @@
 package system.core;
 
+import common.Super.SystemDesignator;
+import common.Super.TSX;
+
 /**
  * Created by Ulli Gerhard on 21.02.2016.
  */
-public class Core {
-    org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger("system.Core");
-
+public class Core extends TSX {
     private static final class CORE_INSTANCE_HOLDER {
         private static final Core INSTANCE = createCore();
     }
@@ -19,6 +20,7 @@ public class Core {
     }
 
     private Core () {
+        super(SystemDesignator.SYSTEM, Core.class);
         log.trace("Core ctor");
         log.trace("Core ctor end");
     }

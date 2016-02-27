@@ -6,6 +6,7 @@ package common.utility;
 public class Configuration {
     private static final org.apache.commons.configuration.Configuration cfg = ConfigAccess.get();
 
+    public static final String SYSTEM_SERVERLABEL = cfg.getString("system.serverlabel");
     public static final String TSSERVER_HOST = cfg.getString("tsserver.host");
     public static final String TSSERVER_PORT = cfg.getString("tsserver.port");
     public static final String TSSERVER_LOGIN = cfg.getString("tsserver.login");
