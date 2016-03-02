@@ -1,4 +1,4 @@
-package common.Super;
+package common.base;
 
 /**
  * Created by Ulli Gerhard on 27.02.2016.

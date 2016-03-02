@@ -1,7 +1,7 @@
 package system.run;
 
-import common.Super.SystemDesignator;
-import common.Super.TSX;
+import common.base.SystemDesignator;
+import common.base.TSX;
 import system.core.Core;
 
 /**

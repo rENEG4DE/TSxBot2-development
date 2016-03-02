@@ -1,12 +1,10 @@
 package common.utility;
 
-import common.Super.SystemDesignator;
-import common.Super.TSX;
+import common.base.SystemDesignator;
+import common.base.TSX;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Created by Ulli Gerhard on 21.02.2016.
@@ -18,7 +16,7 @@ class ConfigAccess {
 
     static {
         try {
-            PropertiesConfiguration temp = new PropertiesConfiguration(DEFAULT_PROPERTIES);
+            final PropertiesConfiguration temp = new PropertiesConfiguration(DEFAULT_PROPERTIES);
             temp.copy(new PropertiesConfiguration(CONFIG_PROPERTIES));
             cfg = temp;
         } catch (ConfigurationException e) {

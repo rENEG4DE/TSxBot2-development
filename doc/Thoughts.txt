@@ -8,6 +8,8 @@ json or yaml config
 file-system persistence (no need for db - write good interface)
 adhere SOLID
 no more NULL ! (use option)
+Functions (method NOT returning void) need to be pure (i.e. not rely on internal state)
+Methods that return void change internal state
 
 apache config
 slf4j logging (maybe wrapper?)
@@ -22,6 +24,7 @@ Global abstract base-class for facades (maybe?)
 Avoid new - use factories
 Lua for Plugins - no more compilation necessary
 Identify artifacts / devices like this-is-the-artifact (all small letters, separate words by dash)
+
 
 notdienst
 

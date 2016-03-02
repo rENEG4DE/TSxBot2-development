@@ -1,7 +1,8 @@
 package system.core;
 
-import common.Super.SystemDesignator;
-import common.Super.TSX;
+import common.base.SystemDesignator;
+import common.base.TSX;
+import tsxdk.io.IOImpl;
 
 /**
  * Created by Ulli Gerhard on 21.02.2016.
@@ -22,6 +23,8 @@ public class Core extends TSX {
     private Core () {
         super(SystemDesignator.SYSTEM, Core.class);
         log.trace("Core ctor");
+//        IOImpl io = IO.createIO ();
+        IOImpl io = new IOImpl();
         log.trace("Core ctor end");
     }
 
