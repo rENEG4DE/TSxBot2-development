@@ -18,9 +18,9 @@ public class Main extends TSX {
         super(SystemDesignator.SYSTEM, Main.class);
         log.info("Starting {}", cfg.SYSTEM_SERVERLABEL);
         core = Core.get();
-        core.start();
-        Core.get().addShutdownHook(() -> {
-            log.info("{} has been terminated", cfg.SYSTEM_SERVERLABEL);
+//        core.start();
+        core.addShutdownHook(() -> {
+            log.info("{} terminated", cfg.SYSTEM_SERVERLABEL);
         });
     }
 }
