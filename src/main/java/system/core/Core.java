@@ -2,7 +2,7 @@ package system.core;
 
 import common.base.SystemDesignator;
 import common.base.TSX;
-import tsxdk.io.IOImpl;
+import tsxdk.io.NIOSocketIOImplDirty;
 
 /**
  * Created by Ulli Gerhard on 21.02.2016.
@@ -23,8 +23,8 @@ public class Core extends TSX {
     private Core () {
         super(SystemDesignator.SYSTEM, Core.class);
         log.trace("Core ctor");
-//        IOImpl io = IO.createIO ();
-        IOImpl io = new IOImpl();
+//        NIOSocketIOImplDirty io = IO.createIO ();
+        NIOSocketIOImplDirty io = new NIOSocketIOImplDirty();
         log.trace("Core ctor end");
     }
 

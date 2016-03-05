@@ -4,20 +4,16 @@ import common.utility.Configuration;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.*;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.regex.Pattern;
 
-public class IOImpl {
+public class NIOSocketIOImplDirty {
     // Direct byte buffer for reading
     private final ByteBuffer dbuf = ByteBuffer.allocateDirect(1024);
     private final Charset charset = Charset.forName("UTF-8");
@@ -28,7 +24,7 @@ public class IOImpl {
     private final Selector selector;
     private SelectionKey selectionKey;
 
-    public IOImpl() {
+    public NIOSocketIOImplDirty() {
         SocketChannel ssc = null;
         Selector stor = null;
         try {
@@ -45,7 +41,8 @@ public class IOImpl {
             System.out.println("SocketChannel has been connected");
 //            ssc.socket().bind(isa);
             stor = Selector.open();
-            selectionKey = ssc.register(stor, SelectionKey.OP_READ);
+//            selectionKey = ssc.register(stor, SelectionKey.OP_READ);
+            selectionKey = ssc.register(stor, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -56,14 +53,14 @@ public class IOImpl {
         selector = stor;
     }
 
-    boolean doitonce = false;
+//    boolean doitonce = false;
 
     private void handleSelectedKeys() {
         System.out.println("Mark 1");
         try {
 //            selector.selectNow();
             System.out.println("Selector: ");
-            selector.selectNow();
+            selector.select();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,7 +95,7 @@ public class IOImpl {
             } else if (key.isWritable()) {
                 System.out.println("Mark 8");
                 try {
-                    if (!doitonce) {
+//                    if (!doitonce) {
                         String newData = "login client_login_name=serveradmin client_login_password=ciqHJ9tF\n";
 
                         dbuf.clear();
@@ -114,50 +111,27 @@ public class IOImpl {
                                 e.printStackTrace();
                             }
                         }
-                        if (!doitonce) {
+//                        if (!doitonce) {
 //                            System.out.println(selectionKey.interestOps() & SelectionKey.OP_READ);
                             key.interestOps(SelectionKey.OP_READ);
-                        }
-                        doitonce = true;
-                    }
+//                        }
+//                        doitonce = true;
+//                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             System.out.println("keyIterator removed");
-            if (!doitonce) {
-                selectionKey.interestOps(SelectionKey.OP_WRITE);
-            }
+//            if (!doitonce) {
+//                selectionKey.interestOps(SelectionKey.OP_WRITE);
+//            }
         }
 
     }
 
-//    public static ByteBuffer str_to_bb(String msg) {
-//        try {
-//            return encoder.encode(CharBuffer.wrap(msg));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-//
-//    public static String bb_to_str(ByteBuffer buffer) {
-//        String data = "";
-//        try {
-//            int old_position = buffer.position();
-//            data = decoder.decode(buffer).toString();
-//            // reset buffer's position to its original so it is not altered:
-//            buffer.position(old_position);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return "";
-//        }
-//        return data;
-//    }
-
     public static void main(String[] args) {
-        IOImpl thiz = new IOImpl();
+        NIOSocketIOImplDirty thiz = new NIOSocketIOImplDirty();
 
         try {
             do {
@@ -168,15 +142,5 @@ public class IOImpl {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-//        for (int i = firstArg; i < args.length; i++) {
-//            String host = args[i];
-//            try {
-//                query(host);
-//            } catch (IOException x) {
-//                System.err.println(host + ": " + x);
-//            }
-//        }
     }
-
 }

@@ -11,4 +11,5 @@ public class Configuration {
     public static final Integer TSSERVER_PORT = cfg.getInt("tsserver.port");
     public static final String TSSERVER_LOGIN = cfg.getString("tsserver.login");
     public static final String TSSERVER_PASSWORD = cfg.getString("tsserver.password");
+    public static final int TSIO_INPUTBUFFERSIZE = cfg.getInt("tsio.inputbuffersize");
 }

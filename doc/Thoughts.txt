@@ -10,6 +10,7 @@ adhere SOLID
 no more NULL ! (use option)
 Functions (method NOT returning void) need to be pure (i.e. not rely on internal state)
 Methods that return void change internal state
+Make the code sexy af
 
 apache config
 slf4j logging (maybe wrapper?)
