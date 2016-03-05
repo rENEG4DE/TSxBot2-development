@@ -1,11 +1,10 @@
 package system.core;
 
-import common.base.SystemDesignator;
+import common.base.SystemDescriptor;
 import common.base.TSX;
 import common.utility.Configuration;
 import tsxdk.io.IO;
 import tsxdk.io.IOImpl;
-import tsxdk.io.SocketConnection;
 import tsxdk.io.SocketConnectionImpl;
 import tsxdk.model.TSServerHandle;
 
@@ -26,12 +25,12 @@ public class Core extends TSX {
     }
 
     private final TSServerHandle serverHandle;
-    private final SocketConnection pipe;
+    private final IO pipe;
 
     private Core() {
-        super(SystemDesignator.SYSTEM, Core.class);
+        super(SystemDescriptor.SYSTEM, Core.class);
         log.info("Creating core");
-        log.info("Environment: {}", getEnvironment());
+        log.info("Environment: {}", cfg.getEnvironment());
         serverHandle = createServerHandle();
         pipe = createPipe();
         start();
@@ -47,8 +46,8 @@ public class Core extends TSX {
         return new TSServerHandle(Configuration.TSSERVER_HOST, Configuration.TSSERVER_PORT);
     }
 
-    private SocketConnection createPipe() {
-        return new SocketConnectionImpl(serverHandle);
+    private IO createPipe() {
+        return new IOImpl(new SocketConnectionImpl(serverHandle));
     }
 
     public void addShutdownHook(Runnable runnable) {

@@ -1,6 +1,6 @@
 package system.run;
 
-import common.base.SystemDesignator;
+import common.base.SystemDescriptor;
 import common.base.TSX;
 import system.core.Core;
 
@@ -15,7 +15,7 @@ public class Main extends TSX {
     }
 
     private Main() {
-        super(SystemDesignator.SYSTEM, Main.class);
+        super(SystemDescriptor.SYSTEM, Main.class);
         log.info("Starting {}", cfg.SYSTEM_SERVERLABEL);
         core = Core.get();
 //        core.start();

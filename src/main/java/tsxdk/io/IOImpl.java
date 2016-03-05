@@ -1,7 +1,7 @@
 package tsxdk.io;
 
 import com.google.common.base.Strings;
-import common.base.SystemDesignator;
+import common.base.SystemDescriptor;
 import common.base.TSX;
 
 import java.io.BufferedReader;
@@ -15,8 +15,8 @@ public class IOImpl extends TSX implements IO {
     private final PrintWriter writer;
 
     public IOImpl(SocketConnection conn) {
-        super(SystemDesignator.IO, IO.class);
-        log.info("Creating IO with SocketConnection");
+        super(SystemDescriptor.IO, IO.class);
+        log.info("Creating IO - connection {}", conn);
         socket = conn;
         reader = socket.getReader();
         writer = socket.getWriter();

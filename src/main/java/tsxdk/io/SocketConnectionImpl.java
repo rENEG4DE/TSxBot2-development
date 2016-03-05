@@ -1,6 +1,6 @@
 package tsxdk.io;
 
-import common.base.SystemDesignator;
+import common.base.SystemDescriptor;
 import common.base.TSX;
 import tsxdk.model.TSServerHandle;
 
@@ -20,8 +20,8 @@ public class SocketConnectionImpl extends TSX implements SocketConnection {
     private PrintWriter writer;
 
     public SocketConnectionImpl(TSServerHandle serverHandle) {
-        super(SystemDesignator.IO, SocketConnection.class);
-        log.info("Creating SocketConnection with TSServerHandle");
+        super(SystemDescriptor.IO, SocketConnection.class);
+        log.info("Creating SocketConnection - serverhandle: {}", serverHandle);
         this.serverHandle = serverHandle;
         initSocket();
         initInput();

@@ -1,6 +1,6 @@
 package common.utility;
 
-import common.base.SystemDesignator;
+import common.base.SystemDescriptor;
 import common.base.TSX;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -16,12 +16,11 @@ class ConfigAccess {
 
     static {
         try {
-            final PropertiesConfiguration temp = new PropertiesConfiguration(DEFAULT_PROPERTIES);
-            temp.copy(new PropertiesConfiguration(CONFIG_PROPERTIES));
-            cfg = temp;
+            cfg = new PropertiesConfiguration(DEFAULT_PROPERTIES);
+            ((PropertiesConfiguration)cfg).copy(new PropertiesConfiguration(CONFIG_PROPERTIES));
         } catch (ConfigurationException e) {
-            org.slf4j.LoggerFactory.getLogger(TSX.createLoggerDescriptor(SystemDesignator.UTILIY, ConfigAccess.class))
-                    .error("Unable to read configuration - {}", e.getMessage());
+            org.slf4j.LoggerFactory.getLogger(TSX.createLoggerDescriptor(SystemDescriptor.UTILIY, ConfigAccess.class))
+                    .error("Unable to read configuration", e);
         }
     }
 
