@@ -5,7 +5,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Created by Ulli Gerhard on 22.02.2016.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 15. of Mai
+ *  2016
+ *  20:44
  */
 public class Configuration {
     private static final org.apache.commons.configuration.Configuration cfg = ConfigAccess.get();

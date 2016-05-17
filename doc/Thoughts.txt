@@ -15,7 +15,7 @@ Make the code sexy af
 apache config
 slf4j logging (maybe wrapper?)
 akka
-guice
+guice   (declined - maybe for plugins - we'll see)
 json/yaml
 RabbitMQ (needed?)
 
@@ -25,6 +25,8 @@ Global abstract base-class for facades (maybe?)
 Avoid new - use factories
 Lua for Plugins - no more compilation necessary
 Identify artifacts / devices like this-is-the-artifact (all small letters, separate words by dash)
+Commit-comment "Unity" means we have achieved a state where the Coder is happy and homogeneity in code is asserted
+Utilize the possibility of several serverquery-connections ! (one for data-getting, one for manipulation, one for events maybe?)
 
 
 notdienst

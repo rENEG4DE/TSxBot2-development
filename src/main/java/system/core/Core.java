@@ -1,37 +1,48 @@
 package system.core;
 
-import common.base.SystemDescriptor;
-import common.base.TSX;
-import common.utility.Configuration;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.Provider;
+import common.defaults.SystemDescriptors;
+import tsxdk.base.TSX;
 import tsxdk.io.IO;
-import tsxdk.io.IOImpl;
-import tsxdk.io.SocketConnectionImpl;
-import tsxdk.model.TSServerHandle;
+import tsxdk.io.GuiceBindings;
+import tsxdk.model.TSServerConnectionModel;
 
 /**
- * Created by Ulli Gerhard on 21.02.2016.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 15. of Mai
+ *  2016
+ *  20:44
  */
 public class Core extends TSX {
-    private static final class CORE_INSTANCE_HOLDER {
-        private static final Core INSTANCE = createCore();
-
-        private static Core createCore() {
-            return new Core();
-        }
-    }
 
     public static Core get() {
         return CORE_INSTANCE_HOLDER.INSTANCE;
     }
 
-    private final TSServerHandle serverHandle;
+    private static final class CORE_INSTANCE_HOLDER {
+        private static final Core INSTANCE = createCore();
+        private static Core createCore() {
+            return new Core();
+        }
+
+    }
+
+    private final TSServerConnectionModel serverHandle;
     private final IO pipe;
 
     private Core() {
-        super(SystemDescriptor.SYSTEM, Core.class);
+        super(SystemDescriptors.SYSTEM, Core.class);
         log.info("Creating core");
         log.info("Environment: {}", cfg.getEnvironment());
-        serverHandle = createServerHandle();
+        Injector injector = Guice.createInjector(new GuiceBindings());
+        log.debug("Created injector: {}", injector);
+        Provider<TSServerConnectionModel> provider = injector.getProvider(TSServerConnectionModel.class);
+        log.debug("Obtained provider: {}", provider);
+        serverHandle = provider.get();
+        System.out.print(serverHandle + " " + provider.get());
         pipe = createPipe();
         start();
         log.info("Core created");
@@ -42,12 +53,9 @@ public class Core extends TSX {
         log.info("Core started");
     }
 
-    private TSServerHandle createServerHandle() {
-        return new TSServerHandle(Configuration.TSSERVER_HOST, Configuration.TSSERVER_PORT);
-    }
-
     private IO createPipe() {
-        return new IOImpl(new SocketConnectionImpl(serverHandle));
+        Injector injector = Guice.createInjector(new GuiceBindings());
+        return injector.getInstance(IO.class);
     }
 
     public void addShutdownHook(Runnable runnable) {

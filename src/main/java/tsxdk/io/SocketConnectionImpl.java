@@ -1,58 +1,65 @@
 package tsxdk.io;
 
-import common.base.SystemDescriptor;
-import common.base.TSX;
-import tsxdk.model.TSServerHandle;
+import com.google.inject.Inject;
+import common.defaults.SystemDescriptors;
+import tsxdk.base.TSX;
+import tsxdk.model.TSServerConnectionModel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Objects;
 
 /**
- * Created by Ulli Gerhard on 29.09.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 15. of Mai
+ *  2016
+ *  20:44
  */
 public class SocketConnectionImpl extends TSX implements SocketConnection {
-    private final TSServerHandle serverHandle;
-    private Socket socket;
-    private BufferedReader reader;
-    private PrintWriter writer;
+    private final Socket socket;
+    private final BufferedReader reader;
+    private final PrintWriter writer;
 
-    public SocketConnectionImpl(TSServerHandle serverHandle) {
-        super(SystemDescriptor.IO, SocketConnection.class);
-        log.info("Creating SocketConnection - serverhandle: {}", serverHandle);
-        this.serverHandle = serverHandle;
-        initSocket();
-        initInput();
-        initOutput();
-        log.info("SocketConnection created - host: {}, port: {}", serverHandle.getHost(), serverHandle.getPort());
+    @Inject
+    public SocketConnectionImpl(TSServerConnectionModel serverHandle) {
+        super(SystemDescriptors.IO, SocketConnection.class);
+        Objects.requireNonNull(serverHandle);
+        log.info("Creating SocketConnection - host: {}, port: {}", serverHandle.getHost(), serverHandle.getPort());
+        socket = createSocket(serverHandle.getHost(), serverHandle.getPort());
+        reader = createInput();
+        writer = createOutput();
+        log.info("SocketConnection created - socket: {}, reader: {}, writer: {}", socket, reader, writer);
     }
 
-    private void initSocket() {
-        final String host = serverHandle.getHost();
-        final int port = serverHandle.getPort();
+    private Socket createSocket(String host, int port) {
         try {
-            socket = new Socket(host,port);
+            return new Socket(host,port);
         } catch (IOException e) {
             throwFatal("Could not create socket", e);
         }
+        return null;
     }
 
-    private void initOutput() {
+    private PrintWriter createOutput() {
         try {
-            writer = new PrintWriter(socket.getOutputStream(), true);
+            return new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException e) {
             throwFatal("Could not initialize output", e);
         }
+        return null;
     }
 
-    private void initInput() {
+    private BufferedReader createInput() {
         try {
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
+            return new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
         } catch (NullPointerException | IOException e) {
             throwFatal("Could not initialize input", e);
         }
+        return null;
     }
 
     @Override
