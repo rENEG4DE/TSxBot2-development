@@ -1,10 +1,10 @@
 package tsxdk.query;
 
-import com.teamspeak.skymaster.tscontroller.tsmanagement.io.IO;
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.Query;
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.QueryResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tsxdk.io.IO;
+import tsxdk.query.model.Query;
+import tsxdk.query.model.QueryResponse;
 
 /**
  * Created by Ulli Gerhard on 15.10.2015.

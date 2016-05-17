@@ -1,6 +1,7 @@
 package tsxdk.query.model;
 
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.decorator.ErrorResponseDecorator;
+
+import tsxdk.query.model.decorator.ErrorResponseDecorator;
 
 import java.util.function.Consumer;
 

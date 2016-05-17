@@ -1,6 +1,7 @@
 package tsxdk.query.model.decorator;
 
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.QueryResultSet;
+
+import tsxdk.query.model.QueryResultSet;
 
 import java.util.Map;
 import java.util.stream.Stream;

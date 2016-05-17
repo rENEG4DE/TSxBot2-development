@@ -1,5 +1,7 @@
 package common.defaults;
 
+import tsxdk.base.TSX;
+
 /**
  * TSxBot2
  * Coded by rENEG4DE
@@ -7,5 +9,11 @@ package common.defaults;
  * 2016
  * 20:27
  */
-public enum SystemDescriptors {
+public enum SystemDescriptors implements TSX.SystemDescriptor {
+    SYSTEM, UTILITY, IO;
+
+    @Override
+    public String get() {
+        return name();
+    }
 }

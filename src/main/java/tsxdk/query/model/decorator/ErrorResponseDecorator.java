@@ -1,8 +1,8 @@
 package tsxdk.query.model.decorator;
 
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tsxdk.query.model.Query;
 
 /**
  * Created by Ulli Gerhard on 09.10.2015.

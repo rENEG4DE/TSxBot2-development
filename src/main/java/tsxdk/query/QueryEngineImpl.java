@@ -1,11 +1,10 @@
 package tsxdk.query;
 
-import com.teamspeak.skymaster.common.utility.Config;
-import com.teamspeak.skymaster.tscontroller.tsmanagement.io.IO;
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.Query;
-import org.apache.commons.configuration.Configuration;
+import com.sun.deploy.config.Config;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tsxdk.io.IO;
+import tsxdk.query.model.Query;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -15,7 +14,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Ulli Gerhard on 07.10.2015.
  */
 public class QueryEngineImpl implements QueryEngine {
-    private static final Configuration cfg = Config.get();
+    private static final Config cfg = Config.get();
     private static final Logger log = LoggerFactory.getLogger(QueryEngine.class);
 
     private final IO tsIO;
@@ -23,7 +22,7 @@ public class QueryEngineImpl implements QueryEngine {
     private final QueryResponseHandler responseHandler;
     private final ConcurrentLinkedQueue<Query> deployedQueries = new ConcurrentLinkedQueue<>();
 
-    private int deployDelay = 1000 / cfg.getInt("query.perSecond");
+    private int deployDelay = 1000 / cfg. getInt("query.perSecond");
     private long lastDeploy;
 
     public QueryEngineImpl(IO tsIO) {

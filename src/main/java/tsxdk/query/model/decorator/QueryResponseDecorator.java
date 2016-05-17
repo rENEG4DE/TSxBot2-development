@@ -1,6 +1,7 @@
 package tsxdk.query.model.decorator;
 
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.QueryResponse;
+
+import tsxdk.query.model.QueryResponse;
 
 /**
  * Created by Ulli Gerhard on 04.11.2015.

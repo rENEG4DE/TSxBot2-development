@@ -2,12 +2,12 @@ package tsxdk.query;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.QueryResponse;
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.QueryResultSet;
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.decorator.ErrorResponseDecorator;
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.decorator.SingleEntityResponseDecorator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tsxdk.query.model.QueryResponse;
+import tsxdk.query.model.QueryResultSet;
+import tsxdk.query.model.decorator.ErrorResponseDecorator;
+import tsxdk.query.model.decorator.SingleEntityResponseDecorator;
 
 import java.io.IOException;
 import java.io.StringReader;

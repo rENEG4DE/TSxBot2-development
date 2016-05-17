@@ -1,13 +1,16 @@
 package tsxdk.io;
 
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 /**
- * Created by Ulli Gerhard on 09.10.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 15. of Mai
+ *  2016
+ *  20:44
  */
-public interface SocketConnection {
+interface SocketConnection {
     boolean isClosed();
 
     BufferedReader getReader();

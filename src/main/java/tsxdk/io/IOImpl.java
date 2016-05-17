@@ -1,8 +1,9 @@
 package tsxdk.io;
 
 import com.google.common.base.Strings;
-import common.base.SystemDescriptor;
-import common.base.TSX;
+import com.google.inject.Inject;
+import common.defaults.SystemDescriptors;
+import tsxdk.base.TSX;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,8 +15,9 @@ public class IOImpl extends TSX implements IO {
     private final BufferedReader reader;
     private final PrintWriter writer;
 
+    @Inject
     public IOImpl(SocketConnection conn) {
-        super(SystemDescriptor.IO, IO.class);
+        super(SystemDescriptors.IO, IO.class);
         log.info("Creating IO - connection {}", conn);
         socket = conn;
         reader = socket.getReader();
@@ -47,6 +49,10 @@ public class IOImpl extends TSX implements IO {
         if (socket.isClosed()) {
             log.error("Can not out to socket - is closed");
             return;
+        }
+
+        if (Strings.isNullOrEmpty(out)) {
+            log.warn("Empty string argument");
         }
 
         writer.println(out);

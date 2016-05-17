@@ -1,13 +1,18 @@
 package system.run;
 
-import common.base.SystemDescriptor;
-import common.base.TSX;
+import common.defaults.SystemDescriptors;
+import common.utility.Configuration;
+import tsxdk.base.TSX;
 import system.core.Core;
 
 /**
- * Created by Ulli Gerhard on 21.02.2016.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 15. of Mai
+ *  2016
+ *  20:44
  */
-public class Main extends TSX {
+class Main extends TSX {
     private final Core core;
 
     public static void main(String[] args) {
@@ -15,12 +20,10 @@ public class Main extends TSX {
     }
 
     private Main() {
-        super(SystemDescriptor.SYSTEM, Main.class);
-        log.info("Starting {}", cfg.SYSTEM_SERVERLABEL);
+        super(SystemDescriptors.SYSTEM, Main.class);
+        log.info("Starting {}", Configuration.SYSTEM_SERVERLABEL);
         core = Core.get();
 //        core.start();
-        core.addShutdownHook(() -> {
-            log.info("{} terminated", cfg.SYSTEM_SERVERLABEL);
-        });
+        core.addShutdownHook(() -> log.info("{} terminated", Configuration.SYSTEM_SERVERLABEL));
     }
 }

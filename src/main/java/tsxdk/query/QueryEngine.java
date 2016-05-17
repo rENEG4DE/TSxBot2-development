@@ -1,7 +1,8 @@
 package tsxdk.query;
 
-import com.teamspeak.skymaster.tscontroller.tsmanagement.io.IO;
-import com.teamspeak.skymaster.tscontroller.tsmanagement.query.model.Query;
+
+import tsxdk.io.IO;
+import tsxdk.query.model.Query;
 
 /**
  * Created by Ulli Gerhard on 13.10.2015.
