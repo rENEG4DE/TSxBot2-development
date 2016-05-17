@@ -1,13 +1,17 @@
 package tsxdk.model;
 
 /**
- * Created by Ulli Gerhard on 05.03.2016.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 15. of Mai
+ *  2016
+ *  20:44
  */
-public class TSServerHandle {
+public class TSServerConnectionModel {
     private final String host;
     private final int port;
 
-    public TSServerHandle(String host, int port) {
+    public TSServerConnectionModel(String host, int port) {
         this.host = host;
         this.port = port;
     }
