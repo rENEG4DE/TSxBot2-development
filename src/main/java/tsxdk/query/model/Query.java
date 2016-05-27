@@ -39,7 +39,7 @@ public class Query {
     }
 
     private Query() {
-        query = null;
+        query = "[YOU_CAN_NOT_SEE_THIS_EVER]";
     }
 
     public Query(String query) {

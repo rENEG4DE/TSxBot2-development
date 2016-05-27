@@ -59,7 +59,6 @@ class QueryResponseParser {
         return new ErrorResponseWrapper(new SingleEntityResponseDecorator(parseComplexResult(response)));
     }
 
-    //TODO: Stop abusing Properties
     private static QueryResultSet parseComplexResult(String response) {
         final Table<Integer, String, String> table = HashBasedTable.create();
         final int[] row = {0};

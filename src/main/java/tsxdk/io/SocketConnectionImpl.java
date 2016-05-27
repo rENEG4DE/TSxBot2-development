@@ -40,8 +40,8 @@ public class SocketConnectionImpl extends TSX implements SocketConnection {
             return new Socket(host,port);
         } catch (IOException e) {
             throwFatal("Could not create socket", e);
+            return null;
         }
-        return null;
     }
 
     private PrintWriter createOutput() {
@@ -49,8 +49,8 @@ public class SocketConnectionImpl extends TSX implements SocketConnection {
             return new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException e) {
             throwFatal("Could not initialize output", e);
+            return null;
         }
-        return null;
     }
 
     private BufferedReader createInput() {
@@ -58,8 +58,8 @@ public class SocketConnectionImpl extends TSX implements SocketConnection {
             return new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
         } catch (NullPointerException | IOException e) {
             throwFatal("Could not initialize input", e);
+            return null;
         }
-        return null;
     }
 
     @Override
