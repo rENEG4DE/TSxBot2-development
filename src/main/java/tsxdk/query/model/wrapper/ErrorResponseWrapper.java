@@ -1,18 +1,22 @@
-package tsxdk.query.model.decorator;
+package tsxdk.query.model.wrapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tsxdk.query.model.Query;
 
 /**
- * Created by Ulli Gerhard on 09.10.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
  */
-public class ErrorResponseDecorator extends QueryResponseDecorator {
-    private final Logger log = LoggerFactory.getLogger(ErrorResponseDecorator.class);
+public class ErrorResponseWrapper extends QueryResponseDecorator {
+    private final Logger log = LoggerFactory.getLogger(ErrorResponseWrapper.class);
     private final int id;
     private final String message;
 
-    public ErrorResponseDecorator(SingleEntityResponseDecorator resultSet) {
+    public ErrorResponseWrapper(SingleEntityResponseDecorator resultSet) {
         super(resultSet);
         id = Integer.parseInt(resultSet.get("id"));
         message = resultSet.get("msg");
@@ -32,7 +36,7 @@ public class ErrorResponseDecorator extends QueryResponseDecorator {
 
     @Override
     public String toString() {
-        return "ErrorResponseDecorator" + "{" +
+        return "ErrorResponseWrapper" + "{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
                 '}';

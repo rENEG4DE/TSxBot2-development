@@ -1,13 +1,14 @@
 package tsxdk.query;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tsxdk.query.model.QueryResponse;
 import tsxdk.query.model.QueryResultSet;
-import tsxdk.query.model.decorator.ErrorResponseDecorator;
-import tsxdk.query.model.decorator.SingleEntityResponseDecorator;
+import tsxdk.query.model.wrapper.ErrorResponseWrapper;
+import tsxdk.query.model.wrapper.SingleEntityResponseDecorator;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -17,8 +18,9 @@ import java.util.Properties;
 
 /**
  * Created by Ulli Gerhard on 09.10.2015.
+ * does this need to be static ?
  */
-public class QueryResponseParser {
+class QueryResponseParser {
     private static final Logger log = LoggerFactory.getLogger(QueryResponseParser.class);
 
     public static QueryResponse parse(String response) throws IllegalArgumentException {
@@ -53,11 +55,10 @@ public class QueryResponseParser {
         return parseComplexResult(response);
     }
 
-    private static ErrorResponseDecorator parseError(String response) {
-        return new ErrorResponseDecorator(new SingleEntityResponseDecorator(parseComplexResult(response)));
+    private static ErrorResponseWrapper parseError(String response) {
+        return new ErrorResponseWrapper(new SingleEntityResponseDecorator(parseComplexResult(response)));
     }
 
-    //TODO: Make this look more fancy
     //TODO: Stop abusing Properties
     private static QueryResultSet parseComplexResult(String response) {
         final Table<Integer, String, String> table = HashBasedTable.create();
@@ -66,17 +67,16 @@ public class QueryResponseParser {
         Arrays.stream(response.split("[|]")).map(s -> {
                     final Properties properties = new Properties();
                     try {
+                        //seems a complex conversion is done fine by properties - no need to substitute
                         properties.load(new StringReader(s.replaceAll("[ ]", "\n")));
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        log.error("Error transforming response-string", e);
                     }
                     return (Map) properties;
                 }
         ).forEach(
                 map -> {
-                    map.forEach((key, val) -> {
-                        table.put(row[0], (String) key, (String) val);
-                    });
+                    map.forEach((key, val) -> table.put(row[0], (String) key, (String) val));
                     row[0]++;
                 }
         );
@@ -85,11 +85,11 @@ public class QueryResponseParser {
     }
 
     private static boolean isValidResponse(String response) {
-        return response != null && !response.isEmpty();
+        return !Strings.isNullOrEmpty(response);
     }
 
     private enum ResponseType {
         TYPE_RESULT,
-        TYPE_ERROR;
+        TYPE_ERROR
     }
 }

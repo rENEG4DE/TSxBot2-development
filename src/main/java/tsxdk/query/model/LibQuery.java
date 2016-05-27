@@ -1,7 +1,11 @@
 package tsxdk.query.model;
 
 /**
- * Created by Ulli Gerhard on 02.10.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
  */
 public enum LibQuery {
     LOGIN("login client_login_name=%s client_login_password=%s"),

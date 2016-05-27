@@ -10,7 +10,7 @@ import tsxdk.base.TSX;
  * 20:27
  */
 public enum SystemDescriptors implements TSX.SystemDescriptor {
-    SYSTEM, UTILITY, IO;
+    SYSTEM, UTILITY, IO, QUERY;
 
     @Override
     public String get() {

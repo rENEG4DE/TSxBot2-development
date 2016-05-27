@@ -6,7 +6,7 @@ import com.google.inject.Provider;
 import common.defaults.SystemDescriptors;
 import tsxdk.base.TSX;
 import tsxdk.io.IO;
-import tsxdk.io.GuiceBindings;
+import tsxdk.modules.GuiceBindings;
 import tsxdk.model.TSServerConnectionModel;
 
 /**
@@ -32,17 +32,18 @@ public class Core extends TSX {
 
     private final TSServerConnectionModel serverHandle;
     private final IO pipe;
-
+    private final Injector injector;
+    private final Provider<TSServerConnectionModel> provider;
     private Core() {
         super(SystemDescriptors.SYSTEM, Core.class);
         log.info("Creating core");
         log.info("Environment: {}", cfg.getEnvironment());
-        Injector injector = Guice.createInjector(new GuiceBindings());
+        injector = Guice.createInjector(new GuiceBindings());
         log.debug("Created injector: {}", injector);
-        Provider<TSServerConnectionModel> provider = injector.getProvider(TSServerConnectionModel.class);
+        provider = injector.getProvider(TSServerConnectionModel.class);
         log.debug("Obtained provider: {}", provider);
         serverHandle = provider.get();
-        System.out.print(serverHandle + " " + provider.get());
+        log.debug("Obtained serverHandle: {}", serverHandle);
         pipe = createPipe();
         start();
         log.info("Core created");
@@ -54,7 +55,6 @@ public class Core extends TSX {
     }
 
     private IO createPipe() {
-        Injector injector = Guice.createInjector(new GuiceBindings());
         return injector.getInstance(IO.class);
     }
 

@@ -1,11 +1,17 @@
 package tsxdk.query.model;
 
 /**
- * Created by Ulli Gerhard on 14.10.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
  */
 public interface QueryResponse {
+    org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QueryResponse.class);
+
     default void assignTo(Query qry) {
-        org.slf4j.LoggerFactory.getLogger(QueryResponse.class).debug("Assigning result ({}) to ({})", toString(), qry.getQueryString());
+        log.debug("Assigning result ({}) to ({})", toString(), qry.getQueryString());
         qry.setResult(this);
     }
 }
