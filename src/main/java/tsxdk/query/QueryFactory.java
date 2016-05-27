@@ -5,7 +5,11 @@ import tsxdk.query.model.Query;
 import static tsxdk.query.model.LibQuery.*;
 
 /**
- * Created by Ulli Gerhard on 02.10.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
  */
 public class QueryFactory {
     public Query login(String name, String pw) {
@@ -37,7 +41,7 @@ public class QueryFactory {
     }
 
     public Query channellist() {
-        return new Query(String.format(CHANNELLIST.get()));
+        return new Query(CHANNELLIST.get());
     }
 
     public Query use(int sid) {

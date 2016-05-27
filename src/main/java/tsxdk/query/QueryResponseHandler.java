@@ -1,16 +1,18 @@
 package tsxdk.query;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import tsxdk.io.IO;
 import tsxdk.query.model.Query;
 import tsxdk.query.model.QueryResponse;
 
 /**
- * Created by Ulli Gerhard on 15.10.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
  */
-public class QueryResponseHandler implements Runnable {
-    private final Logger log = LoggerFactory.getLogger(QueryResponseHandler.class);
+class QueryResponseHandler implements Runnable {
+//    private final Logger log = LoggerFactory.getLogger(QueryResponseHandler.class);
     private final QueryEngine engine;
     private final IO io;
 

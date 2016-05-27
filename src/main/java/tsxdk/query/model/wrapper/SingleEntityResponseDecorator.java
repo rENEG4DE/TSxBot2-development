@@ -1,4 +1,4 @@
-package tsxdk.query.model.decorator;
+package tsxdk.query.model.wrapper;
 
 
 import tsxdk.query.model.QueryResultSet;
@@ -6,7 +6,11 @@ import tsxdk.query.model.QueryResultSet;
 import java.util.Map;
 
 /**
- * Created by Ulli Gerhard on 04.11.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
  */
 public class SingleEntityResponseDecorator extends QueryResponseDecorator {
     private final Map<String, String> resultSet;

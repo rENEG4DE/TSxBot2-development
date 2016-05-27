@@ -1,12 +1,16 @@
-package tsxdk.query.model.decorator;
+package tsxdk.query.model.wrapper;
 
 
 import tsxdk.query.model.QueryResponse;
 
 /**
- * Created by Ulli Gerhard on 04.11.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
  */
-//unused - maybe remove ?
+
 public abstract class QueryResponseDecorator implements QueryResponse {
     protected QueryResponseDecorator(QueryResponse queryResponse) {
     }

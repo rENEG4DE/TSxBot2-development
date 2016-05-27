@@ -5,7 +5,11 @@ import tsxdk.io.IO;
 import tsxdk.query.model.Query;
 
 /**
- * Created by Ulli Gerhard on 13.10.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
  */
 public interface QueryEngine {
     void deploy(Query query);
@@ -15,8 +19,6 @@ public interface QueryEngine {
     Query getCurrentQuery();
 
     void notifyQuerySatisfied();
-
-    void waitForCompletion();
 
     long getTimeSinceLastDeploy();
 }

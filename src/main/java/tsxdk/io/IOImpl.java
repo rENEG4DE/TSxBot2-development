@@ -37,7 +37,7 @@ public class IOImpl extends TSX implements IO {
                     return Optional.ofNullable(input);
                 }
             } catch (IOException e) {
-                throwFatal("Failed to get input from socket", e);
+                throwFatal("Failed to getPopulatedServerConnectionModel input from socket", e);
             }
         }
 

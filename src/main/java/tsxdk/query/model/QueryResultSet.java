@@ -3,7 +3,11 @@ package tsxdk.query.model;
 import com.google.common.collect.Table;
 
 /**
- * Created by Ulli Gerhard on 14.10.2015.
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
  */
 public class QueryResultSet implements QueryResponse {
     private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(QueryResultSet.class);

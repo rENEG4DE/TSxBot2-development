@@ -1,8 +1,8 @@
 package tsxdk.query;
 
-import com.sun.deploy.config.Config;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.google.inject.Inject;
+import common.defaults.SystemDescriptors;
+import tsxdk.base.TSX;
 import tsxdk.io.IO;
 import tsxdk.query.model.Query;
 
@@ -10,30 +10,34 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Ulli Gerhard on 07.10.2015.
- */
-public class QueryEngineImpl implements QueryEngine {
-    private static final Config cfg = Config.get();
-    private static final Logger log = LoggerFactory.getLogger(QueryEngine.class);
 
+/**
+ *  TSxBot2
+ *  Coded by rENEG4DE
+ *  on 27. of Mai
+ *  2016
+ *  10:22
+ */
+public class QueryEngineImpl extends TSX implements QueryEngine  {
     private final IO tsIO;
     private final ScheduledThreadPoolExecutor executor;
     private final QueryResponseHandler responseHandler;
     private final ConcurrentLinkedQueue<Query> deployedQueries = new ConcurrentLinkedQueue<>();
 
-    private int deployDelay = 1000 / cfg. getInt("query.perSecond");
+    private final int deployDelay = 1000 / cfg.QUERY_PERSEC;
     private long lastDeploy;
 
+    @Inject
     public QueryEngineImpl(IO tsIO) {
+        super(SystemDescriptors.QUERY, QueryEngine.class);
         log.info("Starting");
         this.tsIO = tsIO;
         this.responseHandler = new QueryResponseHandler(this);
         log.info("Discarding startup messages");
         discardTeamspeakBootMessages();
         executor = new ScheduledThreadPoolExecutor(1);
-        final int rcvPeriod = cfg.getInt("query.receiverPeriod");
-        executor.scheduleAtFixedRate(responseHandler, 0l, rcvPeriod, TimeUnit.MILLISECONDS);
+        final int rcvPeriod = cfg.QUERY_RECVPERIOD;
+        executor.scheduleAtFixedRate(responseHandler, 0L, rcvPeriod, TimeUnit.MILLISECONDS);
         log.info("Response-handler started with a period of {} ms", rcvPeriod);
         log.info("Running");
     }
@@ -43,7 +47,7 @@ public class QueryEngineImpl implements QueryEngine {
         do {
             cur = tsIO.in().orElse("");
             try {
-                Thread.sleep(cfg.getInt("query.receiverPeriod"));
+                Thread.sleep(cfg.QUERY_RECVPERIOD);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -72,7 +76,7 @@ public class QueryEngineImpl implements QueryEngine {
 
     private void registerDeployedQuery(Query query) {
         deployedQueries.add(query);
-        query.setDeployStamp();
+        query.setDeployed();
         this.lastDeploy = query.getDeployStamp();
     }
 
@@ -91,11 +95,12 @@ public class QueryEngineImpl implements QueryEngine {
         deployedQueries.remove();
     }
 
+/*  This has been deprecated in favor of query-specific-synchronization
     @Override
     public void waitForCompletion() {
         log.debug("Waiting for query-completion");
-        final int completionPeriod = cfg.getInt("query.completionPeriod");
-        final int completionTicks = cfg.getInt("query.completionTicks");
+        final int completionPeriod = Configuration.QUERY_COMPLETEPERIOD;
+        final int completionTicks = Configuration.QUERY_COMPLETIONTICKS;
         int ticks = 0;
         while (!deployedQueries.isEmpty()) try {
             Thread.sleep(completionPeriod);
@@ -107,7 +112,7 @@ public class QueryEngineImpl implements QueryEngine {
             log.warn("Query-completion-sleep interrupted");
         }
         log.debug("Waited {} ms for query-completion", completionPeriod * ticks);
-    }
+    }*/
 
     @Override
     public long getTimeSinceLastDeploy() {

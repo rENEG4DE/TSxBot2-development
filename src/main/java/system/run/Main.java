@@ -2,8 +2,8 @@ package system.run;
 
 import common.defaults.SystemDescriptors;
 import common.utility.Configuration;
+import system.core.Experi_mental_Core;
 import tsxdk.base.TSX;
-import system.core.Core;
 
 /**
  *  TSxBot2
@@ -13,7 +13,7 @@ import system.core.Core;
  *  20:44
  */
 class Main extends TSX {
-    private final Core core;
+//    private final Core core;
 
     public static void main(String[] args) {
         new Main();
@@ -22,8 +22,9 @@ class Main extends TSX {
     private Main() {
         super(SystemDescriptors.SYSTEM, Main.class);
         log.info("Starting {}", Configuration.SYSTEM_SERVERLABEL);
-        core = Core.get();
+//        core = Core.get();
+        Experi_mental_Core.get();
 //        core.start();
-        core.addShutdownHook(() -> log.info("{} terminated", Configuration.SYSTEM_SERVERLABEL));
+        Experi_mental_Core.get ().addShutdownHook(() -> log.info("{} terminated", Configuration.SYSTEM_SERVERLABEL));
     }
 }

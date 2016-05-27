@@ -10,7 +10,7 @@ import java.io.PrintWriter;
  *  2016
  *  20:44
  */
-interface SocketConnection {
+public interface SocketConnection {
     boolean isClosed();
 
     BufferedReader getReader();
