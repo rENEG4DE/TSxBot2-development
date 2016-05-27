@@ -21,10 +21,10 @@ class Main extends TSX {
 
     private Main() {
         super(SystemDescriptors.SYSTEM, Main.class);
-        log.info("Starting {}", Configuration.SYSTEM_SERVERLABEL);
+        log.info("Starting {}", cfg.SYSTEM_SERVERLABEL);
 //        core = Core.get();
         Experi_mental_Core.get();
 //        core.start();
-        Experi_mental_Core.get ().addShutdownHook(() -> log.info("{} terminated", Configuration.SYSTEM_SERVERLABEL));
+        Experi_mental_Core.get ().addShutdownHook(() -> log.info("{} terminated", cfg.SYSTEM_SERVERLABEL));
     }
 }

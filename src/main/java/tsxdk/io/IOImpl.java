@@ -26,18 +26,34 @@ public class IOImpl extends TSX implements IO {
     }
 
     @Override
+    public void shutdown() {
+        socket.shutdown();
+    }
+
+    @Override
     public Optional<String> in() {
+//        for (final Optional<String> res = in0();res.isPresent();) {
+//            log.debug("<< {}", s);
+//            return res;
+//        }
+//
+//        return Optional.empty();
+
+        final Optional<String> result = in0();
+        result.ifPresent(s -> log.debug("<< {}", s));
+        return result;
+    }
+
+    private Optional<String> in0() {
         if (socket.isClosed()) {
-            log.error("Socket is closed!");
+            log.error("Can not read from closed socket");
         } else {
             try {
                 if (reader.ready()) {
-                    final String input = Strings.emptyToNull(reader.readLine());
-                    log.debug("<< {}", input != null ? input : "[empty]");
-                    return Optional.ofNullable(input);
+                    return Optional.ofNullable(Strings.emptyToNull(reader.readLine().trim()));
                 }
             } catch (IOException e) {
-                throwFatal("Failed to getPopulatedServerConnectionModel input from socket", e);
+                throwFatal("Failed to read from socket", e);
             }
         }
 
@@ -45,21 +61,29 @@ public class IOImpl extends TSX implements IO {
     }
 
     @Override
-    public void out(String out) {
+    public boolean out(String out) {
+        if (out0(out)) {
+            log.debug(">> {}", out);
+            return true;
+        } else return false;
+    }
+
+    private boolean out0(String out) {
         if (socket.isClosed()) {
-            log.error("Can not out to socket - is closed");
-            return;
+            log.error("Can not write to closed socket");
+            return false;
         }
 
         if (Strings.isNullOrEmpty(out)) {
-            log.warn("Empty string argument");
+            log.warn("Empty write-argument");
+            return false;
         }
 
         writer.println(out);
+
         if (writer.checkError()) {
-            log.error("Writer suffered an error");
-        } else {
-            log.debug(">> {}", out);
-        }
+            log.error("Writer suffered an error - output was probably not written - {}", out);
+            return false;
+        } else return true;
     }
 }

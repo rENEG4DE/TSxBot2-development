@@ -41,7 +41,7 @@ public class QueryFactory {
     }
 
     public Query channellist() {
-        return new Query(CHANNELLIST.get());
+        return new Query(String.format(CHANNELLIST.get()));
     }
 
     public Query use(int sid) {
@@ -62,5 +62,9 @@ public class QueryFactory {
 
     public Query channeldelete(int cid) {
         return new Query(String.format(CHANNELDELETE.get(), cid));
+    }
+
+    public Query logout() {
+        return new Query(String.format(LOGOUT.get()));
     }
 }

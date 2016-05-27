@@ -12,10 +12,10 @@ import java.util.Map;
  *  2016
  *  10:22
  */
-public class SingleEntityResponseDecorator extends QueryResponseDecorator {
+public class SingleEntityResponse extends ResponseWrapper {
     private final Map<String, String> resultSet;
 
-    public SingleEntityResponseDecorator(QueryResultSet queryResultSet) {
+    public SingleEntityResponse(QueryResultSet queryResultSet) {
         super(queryResultSet);
         this.resultSet = queryResultSet.getTable().row(0);
     }

@@ -1,7 +1,7 @@
 package tsxdk.query.model;
 
 
-import tsxdk.query.model.wrapper.ErrorResponseWrapper;
+import tsxdk.query.model.wrapper.ErrorResponse;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -10,33 +10,19 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 /**
- *  TSxBot2
- *  Coded by rENEG4DE
- *  on 27. of Mai
- *  2016
- *  10:22
+ * TSxBot2
+ * Coded by rENEG4DE
+ * on 27. of Mai
+ * 2016
+ * 10:22
  */
 public class Query {
-    /*
-            * A Response to a Query consists of
-            *  * an optional resultSet
-            *  * an error-message containinig msg and errorcode
-            */
-    final class ResponseContainer {
-        private Optional<QueryResponse> resultSet;
-        private ErrorResponseWrapper error;
-    }
-
     private final String query;
     private final ResponseContainer responseContainer = new ResponseContainer();
     private Optional<ResponseAction> responseAction;
 
     private long deployStamp;
     private CountDownLatch latch;
-
-    public ResponseContainer getResponse() {
-        return responseContainer;
-    }
 
     private Query() {
         query = "[YOU_CAN_NOT_SEE_THIS_EVER]";
@@ -59,26 +45,33 @@ public class Query {
         return (QueryResultSet) responseContainer.resultSet.get();
     }
 
-    public ErrorResponseWrapper getError() {
+    void setResult(QueryResponse result) {
+        this.responseContainer.resultSet = Optional.of(result);
+    }
+
+    public ErrorResponse getError() {
         return responseContainer.error;
     }
 
-    void setResult(QueryResponse result) {
-        this.responseContainer.resultSet = Optional.ofNullable(result);
-    }
-
-    public void setError(ErrorResponseWrapper error) {
+    public void setError(ErrorResponse error) {
         this.responseContainer.error = error;
         triggerResponseAction();
+    }
+
+    public ResponseContainer getResponse() {
+        return responseContainer;
     }
 
     public void bindResponseAction(Consumer<ResponseContainer> responseConsumer) {
         if (Objects.nonNull(responseConsumer)) {
             responseAction = Optional.of(new ResponseAction(responseConsumer));
+        } else {
+            responseAction = Optional.empty();
         }
     }
 
-    private void triggerResponseAction () {
+    private void triggerResponseAction() {
+        latch.countDown();
         if (responseAction.isPresent()) {
             responseAction.get().triggerResponseAction(this);
         }
@@ -88,16 +81,16 @@ public class Query {
         return Objects.nonNull(responseContainer.error);
     }
 
-    public void setDeployed () {
+    public void setDeployed() {
         setDeployLatch();
         setDeployStamp();
     }
 
-    public void setDeployStamp() {
+    private void setDeployStamp() {
         deployStamp = System.currentTimeMillis();
     }
 
-    public void setDeployLatch() {
+    private void setDeployLatch() {
         this.latch = new CountDownLatch(1);
     }
 
@@ -107,5 +100,22 @@ public class Query {
 
     public boolean latchAwait(Long maxDelay) throws InterruptedException {
         return latch.await(maxDelay, TimeUnit.MILLISECONDS);
+    }
+
+    public final class ResponseContainer {
+        private Optional<QueryResponse> resultSet;
+        private ErrorResponse error;
+    }
+
+    private final class ResponseAction {
+        private final Consumer<ResponseContainer> responseAction;
+
+        public ResponseAction(Consumer<ResponseContainer> consumer) {
+            responseAction = consumer;
+        }
+
+        void triggerResponseAction(Query query) {
+            responseAction.accept(query.getResponse());
+        }
     }
 }

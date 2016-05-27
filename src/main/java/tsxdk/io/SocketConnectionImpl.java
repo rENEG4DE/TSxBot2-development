@@ -76,4 +76,13 @@ public class SocketConnectionImpl extends TSX implements SocketConnection {
     public PrintWriter getWriter() {
         return writer;
     }
+
+    @Override
+    public void shutdown () {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            log.error("Unable to close socket", e);
+        }
+    }
 }

@@ -12,6 +12,9 @@ import tsxdk.query.QueryChannelImpl;
 import tsxdk.query.QueryEngine;
 import tsxdk.query.QueryEngineImpl;
 
+/*
+For learning-purposes, all bindings go here (to begin with)
+ */
 public class GuiceBindings extends com.google.inject.AbstractModule {
     protected void configure() {
         bind(IO.class).to(IOImpl.class);

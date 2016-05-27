@@ -11,7 +11,7 @@ import tsxdk.query.model.QueryResponse;
  *  10:22
  */
 
-public abstract class QueryResponseDecorator implements QueryResponse {
-    protected QueryResponseDecorator(QueryResponse queryResponse) {
+public abstract class ResponseWrapper implements QueryResponse {
+    protected ResponseWrapper(QueryResponse queryResponse) {
     }
 }

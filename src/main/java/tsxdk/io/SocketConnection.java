@@ -16,4 +16,6 @@ public interface SocketConnection {
     BufferedReader getReader();
 
     PrintWriter getWriter();
+
+    void shutdown();
 }

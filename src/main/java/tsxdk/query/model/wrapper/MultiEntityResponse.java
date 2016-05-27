@@ -13,10 +13,10 @@ import java.util.stream.Stream;
  *  2016
  *  10:22
  */
-public class MultiEntityResponseDecorator extends QueryResponseDecorator {
+public class MultiEntityResponse extends ResponseWrapper {
     private final QueryResultSet resultSet;
 
-    public MultiEntityResponseDecorator(QueryResultSet queryResponse) {
+    public MultiEntityResponse(QueryResultSet queryResponse) {
         super(queryResponse);
         this.resultSet = queryResponse;
     }

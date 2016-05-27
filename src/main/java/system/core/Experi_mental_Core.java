@@ -9,6 +9,7 @@ import tsxdk.base.TSX;
 import tsxdk.io.IO;
 import tsxdk.model.TSServerConnectionModel;
 import tsxdk.modules.GuiceBindings;
+import tsxdk.query.QueryChannel;
 import tsxdk.query.QueryEngine;
 import tsxdk.query.QueryFactory;
 import tsxdk.query.model.Query;
@@ -64,9 +65,11 @@ public class Experi_mental_Core extends TSX {
         log.info("Starting core");
         final ScheduledThreadPoolExecutor tpe = new ScheduledThreadPoolExecutor(1);
         {
-//            tpe.setRemoveOnCancelPolicy(true);
-            tpe.scheduleAtFixedRate(this::doStuff, 300, 1000, TimeUnit.MILLISECONDS);
+            tpe.setRemoveOnCancelPolicy(true);
+            tpe.scheduleAtFixedRate(this::doStuff, 300, 20, TimeUnit.MILLISECONDS);
         }
+
+//        doStuff();
 
         log.info("Core started");
 
@@ -75,20 +78,31 @@ public class Experi_mental_Core extends TSX {
         } while (true);
     }
 
+    final int[] clientIdx = {0};
+
     private void doStuff() {
         try {
-            final QueryEngine queryEngine = obtainQueryEngine ();
-            Query query = new QueryFactory ().login (Configuration.TSSERVER_LOGIN, Configuration.TSSERVER_PASSWORD);
-            queryEngine.deploy (query);
-            query = new QueryFactory ().channellist ();
-            queryEngine.deploy (query);
+            final QueryChannel queryChannel = obtainQueryChannel ();
+            System.out.println("Obtained the " + ++clientIdx[0] + "th connection");
+            final QueryFactory queryFactory = new QueryFactory();
+
+            Query query = queryFactory.login (cfg.TSSERVER_LOGIN, cfg.TSSERVER_PASSWORD);
+            queryChannel.deploy (query);
+            query = queryFactory.use(1);
+            queryChannel.deploy(query);
+            query = queryFactory.channellist ();
+            queryChannel.deployAndSync(query);
+            query = queryFactory.logout();
+            queryChannel.deployAndSync(query);
+
+            queryChannel.shutdown();
         } catch (Exception e) {
             log.error ("Something happened that was not supposed to", e);
         }
     }
 
-    private IO createPipe() {
-        return injector.getInstance(IO.class);
+    private QueryChannel obtainQueryChannel() {
+        return injector.getInstance(QueryChannel.class);
     }
 
     public void addShutdownHook(Runnable runnable) {
@@ -97,10 +111,8 @@ public class Experi_mental_Core extends TSX {
 
     private static final class CORE_INSTANCE_HOLDER {
         private static final Experi_mental_Core INSTANCE = createCore();
-
         private static Experi_mental_Core createCore() {
             return new Experi_mental_Core();
         }
-
     }
 }

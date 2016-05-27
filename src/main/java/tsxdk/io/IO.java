@@ -6,7 +6,9 @@ import java.util.Optional;
  * Interface for Teamspeak-IO
  */
 public interface IO {
+    void shutdown();
+
     Optional<String> in();
 
-    void out(String out);
+    boolean out(String out);
 }

@@ -20,7 +20,8 @@ public enum LibQuery {
     CHANNELDELETE("channeldelete cid=%d force=1"),
     SERVERPROCESSSTOP("serverprocessstop"),
     PRIVILEGEKEYDELETE("privilegekeydelete token=%s"),
-    USE("use sid=%d");
+    USE("use sid=%d"),
+    LOGOUT("logout");
 
     private final String query;
 

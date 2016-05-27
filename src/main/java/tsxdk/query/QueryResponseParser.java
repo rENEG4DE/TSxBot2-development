@@ -7,8 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import tsxdk.query.model.QueryResponse;
 import tsxdk.query.model.QueryResultSet;
-import tsxdk.query.model.wrapper.ErrorResponseWrapper;
-import tsxdk.query.model.wrapper.SingleEntityResponseDecorator;
+import tsxdk.query.model.wrapper.ErrorResponse;
+import tsxdk.query.model.wrapper.SingleEntityResponse;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -55,8 +55,8 @@ class QueryResponseParser {
         return parseComplexResult(response);
     }
 
-    private static ErrorResponseWrapper parseError(String response) {
-        return new ErrorResponseWrapper(new SingleEntityResponseDecorator(parseComplexResult(response)));
+    private static ErrorResponse parseError(String response) {
+        return new ErrorResponse(new SingleEntityResponse(parseComplexResult(response)));
     }
 
     private static QueryResultSet parseComplexResult(String response) {

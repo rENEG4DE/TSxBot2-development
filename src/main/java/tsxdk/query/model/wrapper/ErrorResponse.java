@@ -11,12 +11,12 @@ import tsxdk.query.model.Query;
  *  2016
  *  10:22
  */
-public class ErrorResponseWrapper extends QueryResponseDecorator {
-    private final Logger log = LoggerFactory.getLogger(ErrorResponseWrapper.class);
+public class ErrorResponse extends ResponseWrapper {
+    private final Logger log = LoggerFactory.getLogger(ErrorResponse.class);
     private final int id;
     private final String message;
 
-    public ErrorResponseWrapper(SingleEntityResponseDecorator resultSet) {
+    public ErrorResponse(SingleEntityResponse resultSet) {
         super(resultSet);
         id = Integer.parseInt(resultSet.get("id"));
         message = resultSet.get("msg");
@@ -36,7 +36,7 @@ public class ErrorResponseWrapper extends QueryResponseDecorator {
 
     @Override
     public String toString() {
-        return "ErrorResponseWrapper" + "{" +
+        return "ErrorResponse" + "{" +
                 "id=" + id +
                 ", message='" + message + '\'' +
                 '}';

@@ -1,7 +1,6 @@
 package tsxdk.query;
 
 import tsxdk.query.model.Query;
-import tsxdk.query.model.QueryResponse;
 
 import java.util.Optional;
 
@@ -14,5 +13,11 @@ import java.util.Optional;
  */
 public interface QueryChannel {
     void deploy (Query query);
-    Optional<QueryResponse> expect (Long maxDelay);
+    void await();
+    void deployAndSync(Query query);
+    void deployAndWait(Query query, long milliseconds);
+    Optional<Query.ResponseContainer> expect (Long maxDelay);
+    Optional<Query.ResponseContainer> expect ();
+
+    void shutdown();
 }

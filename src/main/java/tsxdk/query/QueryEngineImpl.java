@@ -34,7 +34,7 @@ public class QueryEngineImpl extends TSX implements QueryEngine  {
         this.tsIO = tsIO;
         this.responseHandler = new QueryResponseHandler(this);
         log.info("Discarding startup messages");
-        discardTeamspeakBootMessages();
+        discardTSBootMessages();
         executor = new ScheduledThreadPoolExecutor(1);
         final int rcvPeriod = cfg.QUERY_RECVPERIOD;
         executor.scheduleAtFixedRate(responseHandler, 0L, rcvPeriod, TimeUnit.MILLISECONDS);
@@ -42,14 +42,14 @@ public class QueryEngineImpl extends TSX implements QueryEngine  {
         log.info("Running");
     }
 
-    private void discardTeamspeakBootMessages() {
+    private void discardTSBootMessages() {
         String cur;
         do {
             cur = tsIO.in().orElse("");
             try {
                 Thread.sleep(cfg.QUERY_RECVPERIOD);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.error("discardTSBootMessages-sleep was interrupted", e);
             }
             log.debug("Discarded ({})", cur);
         } while (!cur.startsWith("Welcome"));
@@ -70,7 +70,7 @@ public class QueryEngineImpl extends TSX implements QueryEngine  {
         if (suspend > 0) try {
             Thread.sleep(suspend);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            log.error("restrainQueryLoad-sleep was interrupted", e);
         }
     }
 
@@ -95,28 +95,15 @@ public class QueryEngineImpl extends TSX implements QueryEngine  {
         deployedQueries.remove();
     }
 
-/*  This has been deprecated in favor of query-specific-synchronization
-    @Override
-    public void waitForCompletion() {
-        log.debug("Waiting for query-completion");
-        final int completionPeriod = Configuration.QUERY_COMPLETEPERIOD;
-        final int completionTicks = Configuration.QUERY_COMPLETIONTICKS;
-        int ticks = 0;
-        while (!deployedQueries.isEmpty()) try {
-            Thread.sleep(completionPeriod);
-            ticks++;
-            if (ticks >= completionTicks) {
-                handleDeadQueries();
-            }
-        } catch (InterruptedException e) {
-            log.warn("Query-completion-sleep interrupted");
-        }
-        log.debug("Waited {} ms for query-completion", completionPeriod * ticks);
-    }*/
-
     @Override
     public long getTimeSinceLastDeploy() {
         return System.currentTimeMillis() - lastDeploy;
+    }
+
+    @Override
+    public void shutdown () {
+        executor.shutdown();
+        tsIO.shutdown();
     }
 
     private void handleDeadQueries() {
