@@ -6,3 +6,5 @@
 target/
 .idea/uiDesigner.xml
 encodings.xml
+customercode_ow_matchmaking_tscontroller/
+.idea/codeStyleSettings.xml
