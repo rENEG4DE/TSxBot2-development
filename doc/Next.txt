@@ -1,2 +1,13 @@
 Create Query engine
 Introduce guice (IO, SocketConnection)
+
+--DONE
+
+27.05.16
+Split com.tsxbot.tsxdk as subtree repository on github
+Entity-Umwandlung
+Manager für QueryChannel schreiben - constraints !
+Plugin mechanix
+caching opportunities
+Akka utilization
+Internal messaging system (akka ?) ActiveMQ ?
