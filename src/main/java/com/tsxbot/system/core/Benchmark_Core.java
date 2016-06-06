@@ -2,10 +2,15 @@ package com.tsxbot.system.core;
 
 import com.google.common.base.Stopwatch;
 import com.tsxbot.common.defaults.ClientSystemDescriptors;
+import com.tsxbot.tsxdk.client.ChannelListWrapper;
 import com.tsxbot.tsxdk.query.QueryChannel;
-import com.tsxbot.tsxdk.query.model.Query;
 import com.tsxbot.tsxdk.query.QueryGateway;
+import com.tsxbot.tsxdk.query.engine.QueryFactory;
+import com.tsxbot.tsxdk.query.model.Query;
 
+import java.util.Arrays;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /*
@@ -30,11 +35,19 @@ import java.util.concurrent.TimeUnit;
  */
 public class Benchmark_Core extends BaseCore {
     final QueryGateway queryGateway;
+    private final QueryFactory queryFactory;
+    private final QueryChannel queryChannel;
 
     public Benchmark_Core() {
         super(ClientSystemDescriptors.CORE, Benchmark_Core.class);
         queryGateway = obtainQueryGateway();
+        queryFactory = queryGateway.getQueryFactory();
+        queryChannel = queryGateway.getQueryChannel();
         log.info("Benchmark_Core created");
+    }
+
+    public static BaseCore startCore() {
+        return new Benchmark_Core();
     }
 
     protected void doStuff() {
@@ -52,32 +65,37 @@ public class Benchmark_Core extends BaseCore {
 
     private void benchSetup() {
         log.info("Setting up Benchmark");
-        Query query = queryGateway.getQueryFactory().login(cfg.TSSERVER_LOGIN, cfg.TSSERVER_PASSWORD);
-        queryGateway.getQueryChannel().deploy(query);
-        query = queryGateway.getQueryFactory().use(1);
-        queryGateway.getQueryChannel().deployAndWait(query, 20);
+        Query query = queryFactory.login(cfg.TSSERVER_LOGIN, cfg.TSSERVER_PASSWORD);
+        queryChannel.deploy(query);
+        query = queryFactory.use(1);
+        queryChannel.deployAndWait(query, 20);
         purgeExistingChannels();
         log.info("Ready to Benchmark");
     }
 
     private void purgeExistingChannels() {
-        for (int i = 0; i < 60; i++) {
-            final Query channeldelete = queryGateway.getQueryFactory().channeldelete(i);
-            queryGateway.getQueryChannel().deploy(channeldelete);
+        try {
+            final ChannelListWrapper channelListWrapper = new ChannelListWrapper(queryGateway);
+            for (int i : channelListWrapper.getChannelIds()) {
+                final Query channeldelete = queryFactory.channeldelete(i);
+                queryChannel.deploy(channeldelete);
+            }
+        } catch (Exception e) {
+            System.out.printf("something happened...");
         }
     }
 
     private void benchStage1() {
         try {
             Query query = null;
-            final int repCount = 1000;
+            final int repCount = 50;
             int i = repCount;
             log.info("Benchmarking with {} repetitions of a channel-list-query", repCount);
             log.info("Benchmark started");
             final Stopwatch watch = Stopwatch.createStarted();
             for (; i > 0; --i) {
-                query = queryGateway.getQueryFactory().channellist();
-                queryGateway.getQueryChannel().deployAndSync(query);
+                query = queryFactory.channellist();
+                queryChannel.deployAndSync(query);
             }
             watch.stop();
             log.info("Benchmark done");
@@ -97,9 +115,9 @@ public class Benchmark_Core extends BaseCore {
     private void benchStage2(int createCount, int channelCnt) {
         int channelCount = createCount;
         final Stopwatch watch = Stopwatch.createStarted();
-        for (int i = channelCount; i > 0 ; --i) {
-            final Query channelCreate = queryGateway.getQueryFactory().channelcreate(Integer.toString(i + channelCnt), "1234");
-            queryGateway.getQueryChannel().deployAndSync(channelCreate);
+        for (int i = channelCount; i > 0; --i) {
+            final Query channelCreate = queryFactory.channelcreate(Integer.toString(i + channelCnt), "1234");
+            queryChannel.deployAndSync(channelCreate);
         }
         watch.stop();
         log.info("Populating virtual-server-channel-list with {} channels took {} ms",
@@ -110,14 +128,20 @@ public class Benchmark_Core extends BaseCore {
     }
 
     private void benchClose() {
-        final QueryChannel queryChannel = queryGateway.getQueryChannel();
-        final Query query = queryGateway.getQueryFactory().logout();
+        cleanup();
+        final Query query = queryFactory.logout();
         queryChannel.deployAndSync(query);
         queryChannel.shutdown();
     }
 
-
-    public static BaseCore startCore() {
-        return new Benchmark_Core();
+    private void cleanup() {
+        try {
+            final ChannelListWrapper channelListWrapper = new ChannelListWrapper(queryGateway);
+            System.out.println(channelListWrapper.getChannelIds().length);
+        } catch (InterruptedException e) {
+            log.error("Interrupted!", e);
+        } catch (ExecutionException e) {
+            log.error("ExecutionException!", e);
+        }
     }
 }

@@ -19,15 +19,16 @@ public abstract class BaseCore extends TSX {
         log.info("Environment: {}", cfg.getEnvironment());
     }
 
-    public void start() {
+    public void run() {
         log.info("Running core-tasks now");
         doStuff();
         log.info("Core-tasks are finished");
+        System.exit(0);
     }
 
     protected abstract void doStuff();
 
-    private final Injector injector = Guice.createInjector(new GuiceTSxDKBindings());
+    protected final Injector injector = Guice.createInjector(new GuiceTSxDKBindings());
 
     protected QueryGateway obtainQueryGateway() {
         return injector.getInstance(QueryGateway.class);

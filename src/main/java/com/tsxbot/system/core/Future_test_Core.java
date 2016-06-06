@@ -38,7 +38,7 @@ public class Future_test_Core extends BaseCore {
                 final Future<Query.ResponseContainer> ftr = queryChannel.deployGetFuture(query);
 
 //                while (!ftr.isDone()) {
-//                    log.info("Future isDone: {}", ftr.isDone());
+//                    log.info("Future is not here yet");
 //                    Thread.sleep(2);
 //                }
                 log.info("Future {}", ftr.get());

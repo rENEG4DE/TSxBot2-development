@@ -4,7 +4,7 @@
  * Date: 29.05.2016
  * Time: 10:33
  */
-package com.tsxbot.system;
+package com.tsxbot.system.modules;
 
 import com.google.inject.AbstractModule;
 import com.tsxbot.system.core.Benchmark_Core;

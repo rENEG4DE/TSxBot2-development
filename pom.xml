@@ -38,6 +38,12 @@
             <artifactId>guice</artifactId>
             <version>3.0</version>
         </dependency>
+        <!-- http://mvnrepository.com/artifact/com.google.inject.extensions/guice-assistedinject -->
+        <dependency>
+            <groupId>com.google.inject.extensions</groupId>
+            <artifactId>guice-assistedinject</artifactId>
+            <version>4.0</version>
+        </dependency>
     </dependencies>
 
 
