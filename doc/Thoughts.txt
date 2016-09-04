@@ -32,8 +32,8 @@ Utilize the possibility of several serverquery-connections ! (one for data-getti
 notdienst
 
 wiener platz 
-genoveva straße 
+genoveva straï¿½e 
 
 0221 612002
 
-neufelder straße 32
+neufelder straï¿½e 32

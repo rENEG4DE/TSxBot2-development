@@ -22,11 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="TSxBot2" />
+        <module name="tsxbot2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="TSxBot2" target="1.8" />
+      <module name="tsxbot2" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

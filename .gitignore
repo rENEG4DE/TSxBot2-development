@@ -8,3 +8,4 @@ target/
 encodings.xml
 customercode_ow_matchmaking_tscontroller/
 .idea/codeStyleSettings.xml
+doc/ts_if_cred.txt

@@ -1,13 +1,15 @@
-Create Query engine
-Introduce guice (IO, SocketConnection)
-
---DONE
-
-27.05.16
-Split com.tsxbot.tsxdk as subtree repository on github
-Entity-Umwandlung
+Internal messaging system (akka ?) ActiveMQ ?
 Manager für QueryChannel schreiben - constraints !
 Plugin mechanix
 caching opportunities
+
+--DONE
+- 04.09.16
+Cleanup
+Create Query engine
+Introduce guice (IO, SocketConnection)
+
+- 27.05.16
+Split com.tsxbot.tsxdk as subtree repository on github
+Entity-Umwandlung
 Akka utilization
-Internal messaging system (akka ?) ActiveMQ ?
