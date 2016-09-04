@@ -3,7 +3,7 @@ package com.tsxbot.system.core;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.tsxbot.tsxdk.base.TSX;
-import com.tsxbot.tsxdk.modules.GuiceTSxDKBindings;
+import com.tsxbot.tsxdk.modules.TSxDKBindings;
 import com.tsxbot.tsxdk.query.QueryGateway;
 
 /**
@@ -20,18 +20,18 @@ public abstract class BaseCore extends TSX {
     }
 
     public void run() {
-        log.info("Running core-tasks now");
+        log.info("Running core now");
         doStuff();
-        log.info("Core-tasks are finished");
+        log.info("Core has finished - exiting");
         System.exit(0);
     }
 
     protected abstract void doStuff();
 
-    protected final Injector injector = Guice.createInjector(new GuiceTSxDKBindings());
+//    protected final Injector injector = Guice.createInjector(new TSxDKBindings());
 
     protected QueryGateway obtainQueryGateway() {
-        return injector.getInstance(QueryGateway.class);
+        return clientInjector.getInstance(QueryGateway.class);
     }
 
     public void addShutdownHook(Runnable runnable) {

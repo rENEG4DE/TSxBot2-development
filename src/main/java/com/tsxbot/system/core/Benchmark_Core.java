@@ -2,15 +2,12 @@ package com.tsxbot.system.core;
 
 import com.google.common.base.Stopwatch;
 import com.tsxbot.common.defaults.ClientSystemDescriptors;
-import com.tsxbot.tsxdk.client.ChannelListWrapper;
+import com.tsxbot.tsxdk.client.entity.gateway.ChannelGateway;
 import com.tsxbot.tsxdk.query.QueryChannel;
 import com.tsxbot.tsxdk.query.QueryGateway;
 import com.tsxbot.tsxdk.query.engine.QueryFactory;
 import com.tsxbot.tsxdk.query.model.Query;
 
-import java.util.Arrays;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /*
@@ -51,6 +48,7 @@ public class Benchmark_Core extends BaseCore {
     }
 
     protected void doStuff() {
+        benchCheckVar();
         benchSetup();
         benchStage1();
         benchStage2(10, 1);
@@ -61,6 +59,11 @@ public class Benchmark_Core extends BaseCore {
         benchClose();
 
         log.info("Benchmark_Core suspended");
+    }
+
+    private void benchCheckVar() {
+        if (cfg.QUERY_RECVPERIOD > 5 || cfg.QUERY_PERSEC < 20000)
+            log.warn("Suboptimal benchmark-configuration-environment");
     }
 
     private void benchSetup() {
@@ -75,13 +78,13 @@ public class Benchmark_Core extends BaseCore {
 
     private void purgeExistingChannels() {
         try {
-            final ChannelListWrapper channelListWrapper = new ChannelListWrapper(queryGateway);
-            for (int i : channelListWrapper.getChannelIds()) {
+            final ChannelGateway channelListGateway = new ChannelGateway(queryGateway);
+            for (int i : channelListGateway.getChannelIds()) {
                 final Query channeldelete = queryFactory.channeldelete(i);
                 queryChannel.deploy(channeldelete);
             }
         } catch (Exception e) {
-            System.out.printf("something happened...");
+            log.error("something happened that was not supposed to", e);
         }
     }
 
@@ -135,13 +138,6 @@ public class Benchmark_Core extends BaseCore {
     }
 
     private void cleanup() {
-        try {
-            final ChannelListWrapper channelListWrapper = new ChannelListWrapper(queryGateway);
-            System.out.println(channelListWrapper.getChannelIds().length);
-        } catch (InterruptedException e) {
-            log.error("Interrupted!", e);
-        } catch (ExecutionException e) {
-            log.error("ExecutionException!", e);
-        }
+        purgeExistingChannels();
     }
 }

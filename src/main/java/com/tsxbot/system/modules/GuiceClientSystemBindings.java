@@ -7,16 +7,12 @@
 package com.tsxbot.system.modules;
 
 import com.google.inject.AbstractModule;
-import com.tsxbot.system.core.Benchmark_Core;
-import com.tsxbot.system.core.Experi_mental_Core;
-import com.tsxbot.system.core.Future_test_Core;
-import com.tsxbot.system.core.Guice_Core;
+import com.tsxbot.tsxdk.modules.TSxDKBindings;
 
 public class GuiceClientSystemBindings extends AbstractModule {
     protected void configure() {
-        bind(Benchmark_Core.class);
-        bind(Experi_mental_Core.class);
-        bind(Future_test_Core.class);
-        bind(Guice_Core.class);
+        install(new TSxDKBindings());
+        install(new GuiceClientCoreBindings());
+//        bind(Configuration.class).toProvider(Configuration.class);
     }
 }

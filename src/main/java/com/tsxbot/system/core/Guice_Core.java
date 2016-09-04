@@ -5,8 +5,8 @@ import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.tsxbot.common.defaults.ClientSystemDescriptors;
 import com.tsxbot.tsxdk.io.IO;
-import com.tsxbot.tsxdk.modules.GuiceTSxDKBindings;
 import com.tsxbot.tsxdk.model.TSServerConnectionModel;
+import com.tsxbot.tsxdk.modules.TSxDKBindings;
 
 /*
  * TSxBot2
@@ -29,7 +29,7 @@ public class Guice_Core extends BaseCore {
         Provider<TSServerConnectionModel> provider;
 
         log.info("Environment: {}", cfg.getEnvironment());
-        injector = Guice.createInjector(new GuiceTSxDKBindings());
+        injector = Guice.createInjector(new TSxDKBindings());
         log.info("Created injector: {}", injector);
         provider = injector.getProvider(TSServerConnectionModel.class);
         log.info("Obtained provider: {}", provider);
