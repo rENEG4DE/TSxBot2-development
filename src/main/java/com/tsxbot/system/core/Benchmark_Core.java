@@ -62,8 +62,8 @@ public class Benchmark_Core extends BaseCore {
     }
 
     private void benchCheckVar() {
-        if (cfg.QUERY_RECVPERIOD > 5 || cfg.QUERY_PERSEC < 20000)
-            log.warn("Suboptimal benchmark-configuration-environment");
+        if (cfg.QUERY_RECVPERIOD > 1 || cfg.QUERY_PERSEC < 1000)
+            log.warn("Suboptimal benchmark-environment");
     }
 
     private void benchSetup() {
@@ -71,7 +71,7 @@ public class Benchmark_Core extends BaseCore {
         Query query = queryFactory.login(cfg.TSSERVER_LOGIN, cfg.TSSERVER_PASSWORD);
         queryChannel.deploy(query);
         query = queryFactory.use(1);
-        queryChannel.deployAndWait(query, 20);
+        queryChannel.deployAndBlock(query, 20);
         purgeExistingChannels();
         log.info("Ready to Benchmark");
     }
@@ -91,7 +91,7 @@ public class Benchmark_Core extends BaseCore {
     private void benchStage1() {
         try {
             Query query = null;
-            final int repCount = 50;
+            final int repCount = 5;
             int i = repCount;
             log.info("Benchmarking with {} repetitions of a channel-list-query", repCount);
             log.info("Benchmark started");

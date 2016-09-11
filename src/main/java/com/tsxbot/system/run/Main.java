@@ -23,7 +23,7 @@ class Main extends TSX {
     private Main() {
         super(ClientSystemDescriptors.SYSTEM, Main.class);
         log.info("Starting {}", cfg.SYSTEM_SERVERLABEL);
-        final BaseCore core = clientInjector.getInstance(coreClass);
+        final BaseCore core = injector.getInstance(coreClass);
         core.addShutdownHook(() -> log.info("{} terminated", cfg.SYSTEM_SERVERLABEL));
         core.run();
     }

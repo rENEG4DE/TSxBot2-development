@@ -30,29 +30,47 @@ public class Future_test_Core extends BaseCore {
             final QueryChannel queryChannel = queryGateway.getQueryChannel();
             final QueryFactory queryFactory = queryGateway.getQueryFactory();
 
-            queryChannel.deploy(queryFactory.login(cfg.TSSERVER_LOGIN, cfg.TSSERVER_PASSWORD));
-            queryChannel.deployAndWait(queryFactory.use(1), 10);
+            queryGateway.login();
+            queryGateway.use(1);
+
+            //Pump all queries to ts-server, no delays except cfg.QUERY_PERSEC
+//            {
+//                queryChannel.deploy(queryFactory.channellist());
+//                queryChannel.deploy(queryFactory.clientlist());
+//                queryChannel.deploy(queryFactory.channellist());
+//                queryChannel.deploy(queryFactory.clientlist());
+////                final Future<Query.ResponseContainer> ftr = queryChannel.deployGetFuture(queryFactory.clientlist());
+////
+////                while (!ftr.isDone()) {
+////                    log.info("Future is not here yet");
+////                    Thread.sleep(100);
+////                }
+//                queryChannel.deploy(queryFactory.channellist());
+//                queryChannel.deploy(queryFactory.clientlist());
+//                queryChannel.deploy(queryFactory.channellist());
+//                queryChannel.deploy(queryFactory.clientlist());
+////                log.info("Future {}", ftr.get());
+//            }
 
             {
-//                queryChannel.deployGetFuture(queryFactory.channellist());
-//                queryChannel.deployGetFuture(queryFactory.clientlist());
-//                queryChannel.deployGetFuture(queryFactory.channellist());
-//                queryChannel.deployGetFuture(queryFactory.clientlist());
-//                queryChannel.deployGetFuture(queryFactory.channellist());
-//                queryChannel.deployGetFuture(queryFactory.clientlist());
-//                queryChannel.deployGetFuture(queryFactory.channellist());
-//                queryChannel.deployGetFuture(queryFactory.clientlist());
-//                final Future<Query.ResponseContainer> ftr = queryChannel.deployGetFuture(query);
+                queryChannel.deployGetFuture(queryFactory.channellist());
+                queryChannel.deployGetFuture(queryFactory.clientlist());
+                queryChannel.deployGetFuture(queryFactory.channellist());
+                queryChannel.deployGetFuture(queryFactory.clientlist());
+                final Future<Query.ResponseContainer> ftr = queryChannel.deployGetFuture(queryFactory.clientlist());
 
-//                while (!ftr.isDone()) {
-//                    log.info("Future is not here yet");
-//                    Thread.sleep(2);
-//                }
-//                log.info("Future {}", ftr.get());
+                while (!ftr.isDone()) {
+                    log.info("Future is not here yet");
+                    Thread.sleep(10);
+                }
+                queryChannel.deployGetFuture(queryFactory.channellist());
+                queryChannel.deployGetFuture(queryFactory.clientlist());
+                queryChannel.deployGetFuture(queryFactory.channellist());
+                queryChannel.deployGetFuture(queryFactory.clientlist());
+                log.info("Future {}", ftr.get());
             }
 
-            queryChannel.deployAndSync(queryFactory.logout());
-            queryChannel.shutdown();
+            queryGateway.shutdown();
         } catch (Exception e) {
             log.error("Something happened that was not supposed to", e);
         }

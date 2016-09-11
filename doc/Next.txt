@@ -1,3 +1,8 @@
+--OPEN
+Write Core for testing Entity-Gateways
+All Classes that offer shutdown-methods should be failsafely coded so you can not use them when they were shutdown.
+
+--DISPUTED
 Internal messaging system (akka ?) ActiveMQ ?
 Manager für QueryChannel schreiben - constraints !
 Plugin mechanix

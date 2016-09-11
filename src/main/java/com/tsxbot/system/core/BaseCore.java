@@ -1,9 +1,6 @@
 package com.tsxbot.system.core;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.tsxbot.tsxdk.base.TSX;
-import com.tsxbot.tsxdk.modules.TSxDKBindings;
 import com.tsxbot.tsxdk.query.QueryGateway;
 
 /**
@@ -31,7 +28,7 @@ public abstract class BaseCore extends TSX {
 //    protected final Injector injector = Guice.createInjector(new TSxDKBindings());
 
     protected QueryGateway obtainQueryGateway() {
-        return clientInjector.getInstance(QueryGateway.class);
+        return injector.getInstance(QueryGateway.class);
     }
 
     public void addShutdownHook(Runnable runnable) {
