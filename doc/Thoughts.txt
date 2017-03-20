@@ -27,13 +27,3 @@ Lua for Plugins - no more compilation necessary
 Identify artifacts / devices like this-is-the-artifact (all small letters, separate words by dash)
 Commit-comment "Unity" means we have achieved a state where the Coder is happy and homogeneity in code is asserted
 Utilize the possibility of several serverquery-connections ! (one for data-getting, one for manipulation, one for events maybe?)
-
-
-notdienst
-
-wiener platz 
-genoveva stra�e 
-
-0221 612002
-
-neufelder stra�e 32
