@@ -9,10 +9,12 @@ package com.tsxbot.system.modules;
 import com.google.inject.AbstractModule;
 import com.tsxbot.tsxdk.modules.TSxDKBindings;
 
-/*
+/**
     TSxDKBindings installs TSxDKConfiguration and binds TSxDK-classes
     GuiceClientCoreBindings binds Core-classes
+ @deprecated
  */
+
 public class GuiceClientSystemBindings extends AbstractModule {
     protected void configure() {
         install(new TSxDKBindings());

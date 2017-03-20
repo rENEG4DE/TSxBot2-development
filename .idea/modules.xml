@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/dev_plugin/plugin_a/src/main/main.iml" filepath="$PROJECT_DIR$/dev_plugin/plugin_a/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dev_plugin/plugin_a/plugin_a.iml" filepath="$PROJECT_DIR$/dev_plugin/plugin_a/plugin_a.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dev_plugin/plugin_c/plugin_c.iml" filepath="$PROJECT_DIR$/dev_plugin/plugin_c/plugin_c.iml" />
       <module fileurl="file://$PROJECT_DIR$/tsxbot2.iml" filepath="$PROJECT_DIR$/tsxbot2.iml" />
     </modules>
   </component>

@@ -2,8 +2,7 @@ package com.tsxbot.system.run;
 
 import com.tsxbot.common.defaults.ClientSystemDescriptors;
 import com.tsxbot.system.core.BaseCore;
-import com.tsxbot.system.core.Benchmark_Core;
-import com.tsxbot.system.core.Future_test_Core;
+import com.tsxbot.system.core.Plugin_Test_Core;
 import com.tsxbot.tsxdk.base.TSX;
 
 /**
@@ -14,7 +13,8 @@ import com.tsxbot.tsxdk.base.TSX;
  * 20:44
  */
 class Main extends TSX {
-    private final Class<? extends BaseCore> coreClass = Future_test_Core.class;
+//    private final Class<? extends BaseCore> coreClass = Future_test_Core.class;
+    private final Class<? extends BaseCore> coreClass = Plugin_Test_Core.class;
 
     public static void main(String[] args) {
         new Main();

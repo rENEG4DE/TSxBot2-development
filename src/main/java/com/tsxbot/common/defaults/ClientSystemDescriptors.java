@@ -10,7 +10,7 @@ import com.tsxbot.tsxdk.base.TSX;
  * 20:27
  */
 public enum ClientSystemDescriptors implements TSX.SystemDescriptor {
-    SYSTEM, CORE;
+    SYSTEM, CORE, PLUGIN;
 
     @Override
     public String get() {

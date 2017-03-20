@@ -1,0 +1,7 @@
+<archetype>
+  <id>plugin_archetype</id>
+
+  <sources>
+    <source>src/main/java/__shortName__/ModDef.java</source>
+  </sources>
+</archetype>

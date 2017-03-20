@@ -5,9 +5,6 @@ import com.tsxbot.common.defaults.ClientSystemDescriptors;
 import com.tsxbot.tsxdk.query.QueryChannel;
 import com.tsxbot.tsxdk.query.QueryGateway;
 import com.tsxbot.tsxdk.query.engine.QueryFactory;
-import com.tsxbot.tsxdk.query.model.Query;
-
-import java.util.concurrent.Future;
 
 /*
  * TSxBot2
@@ -52,23 +49,23 @@ public class Future_test_Core extends BaseCore {
 ////                log.info("Future {}", ftr.get());
 //            }
 
-            {
-                queryChannel.deployGetFuture(queryFactory.channellist());
-                queryChannel.deployGetFuture(queryFactory.clientlist());
-                queryChannel.deployGetFuture(queryFactory.channellist());
-                queryChannel.deployGetFuture(queryFactory.clientlist());
-                final Future<Query.ResponseContainer> ftr = queryChannel.deployGetFuture(queryFactory.clientlist());
-
-                while (!ftr.isDone()) {
-                    log.info("Future is not here yet");
-                    Thread.sleep(10);
-                }
-                queryChannel.deployGetFuture(queryFactory.channellist());
-                queryChannel.deployGetFuture(queryFactory.clientlist());
-                queryChannel.deployGetFuture(queryFactory.channellist());
-                queryChannel.deployGetFuture(queryFactory.clientlist());
-                log.info("Future {}", ftr.get());
-            }
+//            {
+//                queryChannel.deployGetFuture(queryFactory.channellist());
+//                queryChannel.deployGetFuture(queryFactory.clientlist());
+//                queryChannel.deployGetFuture(queryFactory.channellist());
+//                queryChannel.deployGetFuture(queryFactory.clientlist());
+//                final Future<Query.ResponseContainer> ftr = queryChannel.deployGetFuture(queryFactory.clientlist());
+//
+//                while (!ftr.isDone()) {
+//                    log.info("Future is not here yet");
+//                    Thread.sleep(10);
+//                }
+//                queryChannel.deployGetFuture(queryFactory.channellist());
+//                queryChannel.deployGetFuture(queryFactory.clientlist());
+//                queryChannel.deployGetFuture(queryFactory.channellist());
+//                queryChannel.deployGetFuture(queryFactory.clientlist());
+//                log.info("Future {}", ftr.get());
+//            }
 
             queryGateway.shutdown();
         } catch (Exception e) {
